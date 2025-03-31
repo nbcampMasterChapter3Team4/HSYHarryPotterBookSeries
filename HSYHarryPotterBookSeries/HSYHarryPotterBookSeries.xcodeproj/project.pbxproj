@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BD125C5D2D9A7F51004CF747 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BD125C5C2D9A7F51004CF747 /* SnapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		BD125C382D968258004CF747 /* HSYHarryPotterBookSeries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HSYHarryPotterBookSeries.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD125C5D2D9A7F51004CF747 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = HSYHarryPotterBookSeries;
 			packageProductDependencies = (
+				BD125C5C2D9A7F51004CF747 /* SnapKit */,
 			);
 			productName = HSYHarryPotterBookSeries;
 			productReference = BD125C382D968258004CF747 /* HSYHarryPotterBookSeries.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = BD125C2F2D968258004CF747;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				BD125C5B2D9A7F51004CF747 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BD125C392D968258004CF747 /* Products */;
 			projectDirPath = "";
@@ -343,6 +352,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BD125C5B2D9A7F51004CF747 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BD125C5C2D9A7F51004CF747 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BD125C5B2D9A7F51004CF747 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BD125C302D968258004CF747 /* Project object */;
 }
