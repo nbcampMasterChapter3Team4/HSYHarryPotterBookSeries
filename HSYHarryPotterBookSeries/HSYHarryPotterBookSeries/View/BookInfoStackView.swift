@@ -143,7 +143,7 @@ class BookInfoStackView: UIStackView {
            containerStackView.addArrangedSubview(coverImageView)
 
            coverImageView.snp.makeConstraints { make in
-               make.width.equalTo(80)
+               make.width.equalTo(100)
                make.height.equalTo(coverImageView.snp.width).multipliedBy(1.5)
            }
 
