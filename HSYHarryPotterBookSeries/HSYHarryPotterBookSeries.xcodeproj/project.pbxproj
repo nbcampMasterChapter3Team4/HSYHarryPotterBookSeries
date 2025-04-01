@@ -18,7 +18,7 @@
 		BD125C4A2D968259004CF747 /* Exceptions for "HSYHarryPotterBookSeries" folder in "HSYHarryPotterBookSeries" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Resource/Info.plist,
 			);
 			target = BD125C372D968258004CF747 /* HSYHarryPotterBookSeries */;
 		};
@@ -156,7 +156,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = AZ7B294WMJ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HSYHarryPotterBookSeries/Info.plist;
+				INFOPLIST_FILE = HSYHarryPotterBookSeries/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -188,7 +188,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = AZ7B294WMJ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HSYHarryPotterBookSeries/Info.plist;
+				INFOPLIST_FILE = HSYHarryPotterBookSeries/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
