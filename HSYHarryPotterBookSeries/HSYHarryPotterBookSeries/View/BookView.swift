@@ -11,6 +11,8 @@ import SnapKit
 class BookView: UIView {
 
     let bookInfoStackView = BookInfoStackView()
+    let bookDedicationStackView = BookDedicationStackView()
+    let bookSummaryStackView = BookSummaryStackView()
 
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -46,23 +48,36 @@ class BookView: UIView {
         backgroundColor = .white
 
         addSubview(titleLabel)
+        addSubview(seriesLabel)
+        addSubview(bookInfoStackView)
+        addSubview(bookDedicationStackView)
+        addSubview(bookSummaryStackView)
+
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(10)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
         }
 
-        addSubview(seriesLabel)
         seriesLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.leading.trailing.greaterThanOrEqualToSuperview().inset(20)
         }
 
-        addSubview(bookInfoStackView)
         bookInfoStackView.snp.makeConstraints { make in
             make.top.equalTo(seriesLabel.snp.bottom).offset(16)
             make.leading.trailing.equalTo(self.safeAreaLayoutGuide).inset(5)
+        }
+
+        bookDedicationStackView.snp.makeConstraints { make in
+            make.top.equalTo(bookInfoStackView.snp.bottom).offset(24)
+            make.leading.trailing.equalToSuperview().inset(20)
+        }
+
+        bookSummaryStackView.snp.makeConstraints { make in
+            make.top.equalTo(bookDedicationStackView.snp.bottom).offset(24)
+            make.leading.trailing.equalToSuperview().inset(20)
         }
     }
 }
