@@ -38,8 +38,8 @@ final class BookChapterStackView: UIStackView {
     func updateContent(chapters: [String]) {
         for chapter in chapters {
             let chapterLabel = UILabel()
-            chapterLabel.font = .systemFont(ofSize: 14, weight: .bold)
-            chapterLabel.textColor = .systemGray
+            chapterLabel.font = .systemFont(ofSize: 14)
+            chapterLabel.textColor = .darkGray
             chapterLabel.text = chapter
             addArrangedSubview(chapterLabel)
         }
