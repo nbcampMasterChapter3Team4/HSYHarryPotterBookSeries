@@ -37,6 +37,7 @@ class ViewController: UIViewController {
                                                                    pages: firstBook.pages)
                     self?.bookView.bookDedicationStackView.updateContent(dedication: firstBook.dedication)
                     self?.bookView.bookSummaryStackView.updateContent(dedication: firstBook.summary)
+                    self?.bookView.bookCapterStackView.updateContent(chapters: firstBook.chapters.map({$0.title}))
                 case .failure(let error):
                     print("❌ 에러 발생: \(error)")
                 }

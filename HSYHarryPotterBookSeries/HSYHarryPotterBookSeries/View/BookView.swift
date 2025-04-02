@@ -13,6 +13,18 @@ class BookView: UIView {
     let bookInfoStackView = BookInfoStackView()
     let bookDedicationStackView = BookDedicationStackView()
     let bookSummaryStackView = BookSummaryStackView()
+    let bookCapterStackView = BookChapterStackView()
+
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+
+    let contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
 
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -47,11 +59,12 @@ class BookView: UIView {
     private func setupViews() {
         backgroundColor = .white
 
+        // MARK: - view
+
         addSubview(titleLabel)
         addSubview(seriesLabel)
-        addSubview(bookInfoStackView)
-        addSubview(bookDedicationStackView)
-        addSubview(bookSummaryStackView)
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
 
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(10)
@@ -65,19 +78,43 @@ class BookView: UIView {
             make.leading.trailing.greaterThanOrEqualToSuperview().inset(20)
         }
 
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(seriesLabel.snp.bottom).offset(24)
+            make.leading.trailing.equalTo(self.safeAreaLayoutGuide).inset(20)
+            make.bottom.equalTo(self.safeAreaLayoutGuide)
+        }
+
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
+        }
+
+        // MARK: - contentView
+
+        contentView.addSubview(bookInfoStackView)
+        contentView.addSubview(bookDedicationStackView)
+        contentView.addSubview(bookSummaryStackView)
+        contentView.addSubview(bookCapterStackView)
+
         bookInfoStackView.snp.makeConstraints { make in
-            make.top.equalTo(seriesLabel.snp.bottom).offset(16)
-            make.leading.trailing.equalTo(self.safeAreaLayoutGuide).inset(5)
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
         }
 
         bookDedicationStackView.snp.makeConstraints { make in
             make.top.equalTo(bookInfoStackView.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.leading.trailing.equalToSuperview()
         }
 
         bookSummaryStackView.snp.makeConstraints { make in
             make.top.equalTo(bookDedicationStackView.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.leading.trailing.equalToSuperview()
+        }
+
+        bookCapterStackView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(bookSummaryStackView.snp.bottom).offset(24)
+            make.bottom.equalTo(contentView.snp.bottom).inset(16)
         }
     }
 }
