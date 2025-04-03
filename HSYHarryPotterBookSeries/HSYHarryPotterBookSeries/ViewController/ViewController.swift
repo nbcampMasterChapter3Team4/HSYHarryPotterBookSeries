@@ -16,6 +16,7 @@ class ViewController: UIViewController {
 
     override func loadView() {
         view = bookView
+        bookView.delegate = self
     }
 
     override func viewDidLoad() {
@@ -31,7 +32,7 @@ class ViewController: UIViewController {
                     guard let self = self, let firstBook = books.first else { return }
 
                     self.bookView.titleLabel.text = firstBook.title
-                    self.bookView.seriesLabel.text = "1"
+                    //self.bookView.seriesLabel.text = "1"
                     self.bookView.bookInfoStackView.updateContent(
                         imageName: "harrypotter1",
                         bookTitle: firstBook.title,
@@ -61,5 +62,11 @@ class ViewController: UIViewController {
                 }
             }
         }
+    }
+}
+
+extension ViewController: BookViewDelegate {
+    func bookView(_ bookView: BookView, didSelectSeriesButton number: Int) {
+            print("\(number)")
     }
 }

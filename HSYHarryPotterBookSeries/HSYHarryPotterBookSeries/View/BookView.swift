@@ -15,6 +15,8 @@ class BookView: UIView {
     let bookSummaryStackView = BookSummaryStackView()
     let bookCapterStackView = BookChapterStackView()
 
+    weak var delegate: BookViewDelegate?
+
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -35,20 +37,18 @@ class BookView: UIView {
         return label
     }()
 
-    let seriesLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
-        label.textAlignment = .center
-        label.textColor = .white
-        label.backgroundColor = .systemBlue
-        label.clipsToBounds = true
-        label.layer.cornerRadius = 20
-        return label
-    }()
+    let seriesStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
+        return stackView
+    } ()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+        setSeriesLabel()
     }
 
     required init?(coder: NSCoder) {
@@ -62,7 +62,7 @@ class BookView: UIView {
         // MARK: - view
 
         addSubview(titleLabel)
-        addSubview(seriesLabel)
+        addSubview(seriesStackView)
         addSubview(scrollView)
         scrollView.addSubview(contentView)
 
@@ -72,14 +72,14 @@ class BookView: UIView {
             make.trailing.equalToSuperview().inset(20)
         }
 
-        seriesLabel.snp.makeConstraints { make in
+        seriesStackView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
             make.leading.trailing.greaterThanOrEqualToSuperview().inset(20)
         }
 
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(seriesLabel.snp.bottom).offset(24)
+            make.top.equalTo(seriesStackView.snp.bottom).offset(24)
             make.leading.trailing.equalTo(self.safeAreaLayoutGuide).inset(20)
             make.bottom.equalTo(self.safeAreaLayoutGuide)
         }
@@ -116,5 +116,24 @@ class BookView: UIView {
             make.top.equalTo(bookSummaryStackView.snp.bottom).offset(24)
             make.bottom.equalTo(contentView.snp.bottom).inset(16)
         }
+    }
+
+    func setSeriesLabel() {
+        (1...7).forEach { number in
+            let button = UIButton(type: .system)
+            button.setTitle("\(number)", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 16)
+            button.titleLabel?.textAlignment = .center
+            button.setTitleColor(.white, for: .normal)
+            button.backgroundColor = .systemBlue
+            button.layer.cornerRadius = button.layer.frame.width / 2
+            button.tag = number // 버튼 태그를 설정하여 몇번 버튼인지 식별
+            button.addTarget(self, action: #selector(handleSeriesButtonTapped(_:)), for: .touchUpInside)
+            seriesStackView.addArrangedSubview(button)
+        }
+    }
+
+    @objc private func handleSeriesButtonTapped(_ sender: UIButton) {
+        delegate?.bookView(self, didSelectSeriesButton: sender.tag)
     }
 }
