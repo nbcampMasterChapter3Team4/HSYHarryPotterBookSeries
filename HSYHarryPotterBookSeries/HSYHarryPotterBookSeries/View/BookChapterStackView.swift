@@ -8,7 +8,7 @@
 import UIKit
 
 final class BookChapterStackView: UIStackView {
-    let tittleLabel: UILabel = {
+    private let tittleLabel: UILabel = {
         let label = UILabel()
         label.text = "Chapters"
         label.font = .systemFont(ofSize: 18, weight: .bold)
@@ -25,7 +25,7 @@ final class BookChapterStackView: UIStackView {
         setupViews()
     }
 
-    func setupViews() {
+    private func setupViews() {
         axis = .vertical
         distribution = .equalSpacing
         spacing = 8

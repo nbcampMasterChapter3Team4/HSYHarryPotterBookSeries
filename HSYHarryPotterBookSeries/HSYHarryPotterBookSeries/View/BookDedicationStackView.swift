@@ -9,7 +9,7 @@ import UIKit
 
 final class BookDedicationStackView: UIStackView {
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.textColor = .label
@@ -18,7 +18,7 @@ final class BookDedicationStackView: UIStackView {
         return label
     }()
 
-    let dedicationLabel: UILabel = {
+    private let dedicationLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = .darkGray

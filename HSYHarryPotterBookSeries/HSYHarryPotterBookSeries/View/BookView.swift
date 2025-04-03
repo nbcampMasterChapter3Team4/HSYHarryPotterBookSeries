@@ -8,27 +8,27 @@
 import UIKit
 import SnapKit
 
-class BookView: UIView {
+final class BookView: UIView {
 
     let bookInfoStackView = BookInfoStackView()
     let bookDedicationStackView = BookDedicationStackView()
     let bookSummaryStackView = BookSummaryStackView()
     let bookCapterStackView = BookChapterStackView()
-
+    
     weak var delegate: BookViewDelegate?
 
-    let scrollView: UIScrollView = {
+    private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
 
-    let contentView: UIView = {
+    private let contentView: UIView = {
         let view = UIView()
         return view
     }()
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 24)
         label.textAlignment = .center
@@ -37,7 +37,7 @@ class BookView: UIView {
         return label
     }()
 
-    let seriesStackView: UIStackView = {
+    private let seriesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 15
@@ -76,7 +76,7 @@ class BookView: UIView {
         seriesStackView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
-//            make.leading.trailing.greaterThanOrEqualToSuperview().inset(20)
+            //            make.leading.trailing.greaterThanOrEqualToSuperview().inset(20)
             make.width.equalTo(335)
 
         }
@@ -121,7 +121,7 @@ class BookView: UIView {
         }
     }
 
-    func setSeriesLabel(selectedBook: Int) {
+    private func setSeriesLabel(selectedBook: Int) {
         seriesStackView.arrangedSubviews.forEach { subview in
             seriesStackView.removeArrangedSubview(subview)
             subview.removeFromSuperview()
@@ -150,5 +150,11 @@ class BookView: UIView {
     @objc private func handleSeriesButtonTapped(_ sender: UIButton) {
         delegate?.bookView(self, didSelectSeriesButton: sender.tag)
         setSeriesLabel(selectedBook: sender.tag)
+    }
+
+    // MARK: - 외부에서 데이터를 업데이트하는 메서드
+    /// title: 책 제목
+    func updateContent(title: String) {
+        titleLabel.text = title
     }
 }

@@ -9,7 +9,7 @@ import UIKit
 
 final class BookSummaryStackView: UIStackView {
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.textColor = .label
@@ -18,7 +18,7 @@ final class BookSummaryStackView: UIStackView {
         return label
     }()
 
-    let summaryLabel: UILabel = {
+    private let summaryLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = .darkGray
@@ -32,7 +32,7 @@ final class BookSummaryStackView: UIStackView {
         return button
     }()
 
-    var onToggle: (() -> Void)?
+    private var onToggle: (() -> Void)?
 
     private var summaryText: String = ""
 

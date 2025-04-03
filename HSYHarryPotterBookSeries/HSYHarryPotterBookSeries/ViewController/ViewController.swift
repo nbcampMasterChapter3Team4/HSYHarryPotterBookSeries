@@ -32,7 +32,7 @@ class ViewController: UIViewController {
                     guard books.indices.contains(selectedNum) else { return }
                     let selectedBook = books[selectedNum]
                     
-                    self?.bookView.titleLabel.text = selectedBook.title
+                    self?.bookView.updateContent(title: selectedBook.title)
                     self?.bookView.bookInfoStackView.updateContent(
                         imageName: "harrypotter" + "\(selectedNum + 1)",
                         bookTitle: selectedBook.title,
@@ -58,15 +58,23 @@ class ViewController: UIViewController {
                     self?.bookView.bookCapterStackView.updateContent(chapters: selectedBook.chapters.map({ $0.title }))
                     
                 case .failure(let error):
-                    let alert = UIAlertController(title: "데이터에 오류가 있습니다.",
-                                                  message: error.localizedDescription,
-                                                  preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                    self?.present(alert, animated: true, completion: nil)
-                    
+                    self?.showAlert(errorMessage: error.localizedDescription)
                 }
             }
         }
+    }
+
+    func showAlert(errorMessage: String) {
+        let alert = UIAlertController(title: "데이터에 오류가 있습니다.",
+                                      message: errorMessage,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "앱 종료", style: .default, handler: { _ in
+            UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                exit(0)
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
