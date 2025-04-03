@@ -24,38 +24,38 @@ class ViewController: UIViewController {
         loadBook()
     }
 
-    private func loadBook() {
+    private func loadBook(selectedNum: Int = 0) {
         dataService.loadBooks { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let books):
-                    guard let self = self, let firstBook = books.first else { return }
+                    guard books.indices.contains(selectedNum) else { return }
+                    let selectedBook = books[selectedNum]
 
-                    self.bookView.titleLabel.text = firstBook.title
-                    //self.bookView.seriesLabel.text = "1"
-                    self.bookView.bookInfoStackView.updateContent(
-                        imageName: "harrypotter1",
-                        bookTitle: firstBook.title,
-                        authorName: firstBook.author,
-                        releaseDate: firstBook.releaseDate,
-                        pages: firstBook.pages)
+                    self?.bookView.titleLabel.text = selectedBook.title
+                    self?.bookView.bookInfoStackView.updateContent(
+                        imageName: "harrypotter" + "\(selectedNum + 1)",
+                        bookTitle: selectedBook.title,
+                        authorName: selectedBook.author,
+                        releaseDate: selectedBook.releaseDate,
+                        pages: selectedBook.pages)
 
-                    self.bookView.bookDedicationStackView.updateContent(dedication: firstBook.dedication)
+                    self?.bookView.bookDedicationStackView.updateContent(dedication: selectedBook.dedication)
 
                     // 요약 텍스트 업데이트
-                    let summaryText = firstBook.summary
-                    self.bookView.bookSummaryStackView.updateContent(summary: summaryText,
-                                                                  isExpanded: self.summaryStateModel.isExpanded)
+                    let summaryText = selectedBook.summary
+                    self?.bookView.bookSummaryStackView.updateContent(summary: summaryText,
+                                                                      isExpanded: self?.summaryStateModel.isExpanded ?? false)
 
                     // 더보기/접기 버튼 액션 처리
-                    self.bookView.bookSummaryStackView.onToggle = { [weak self] in
+                    self?.bookView.bookSummaryStackView.onToggle = { [weak self] in
                         guard let self = self else { return }
                         self.summaryStateModel.isExpanded.toggle()
                         self.bookView.bookSummaryStackView.updateContent(summary: summaryText,
                                                                       isExpanded: self.summaryStateModel.isExpanded)
                     }
 
-                    self.bookView.bookCapterStackView.updateContent(chapters: firstBook.chapters.map({ $0.title }))
+                    self?.bookView.bookCapterStackView.updateContent(chapters: selectedBook.chapters.map({ $0.title }))
 
                 case .failure(let error):
                     print("❌ 에러 발생: \(error)")
@@ -67,6 +67,6 @@ class ViewController: UIViewController {
 
 extension ViewController: BookViewDelegate {
     func bookView(_ bookView: BookView, didSelectSeriesButton number: Int) {
-            print("\(number)")
+        loadBook(selectedNum: number - 1)
     }
 }

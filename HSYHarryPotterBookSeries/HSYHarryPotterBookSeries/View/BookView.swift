@@ -40,8 +40,7 @@ class BookView: UIView {
     let seriesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 8
+        stackView.distribution = .equalSpacing
         return stackView
     } ()
 
@@ -126,9 +125,11 @@ class BookView: UIView {
             button.titleLabel?.textAlignment = .center
             button.setTitleColor(.white, for: .normal)
             button.backgroundColor = .systemBlue
-            button.layer.cornerRadius = button.layer.frame.width / 2
-            button.tag = number // 버튼 태그를 설정하여 몇번 버튼인지 식별
-            button.addTarget(self, action: #selector(handleSeriesButtonTapped(_:)), for: .touchUpInside)
+            button.layer.cornerRadius = button.layer.bounds.width / 2
+            button.tag = number 
+            button.addTarget(self,
+                             action: #selector(handleSeriesButtonTapped(_:)),
+                             for: .touchUpInside)
             seriesStackView.addArrangedSubview(button)
         }
     }
