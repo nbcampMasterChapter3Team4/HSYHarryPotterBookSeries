@@ -125,12 +125,16 @@ class BookView: UIView {
             button.titleLabel?.textAlignment = .center
             button.setTitleColor(.white, for: .normal)
             button.backgroundColor = .systemBlue
-            button.layer.cornerRadius = button.layer.bounds.width / 2
-            button.tag = number 
+            button.layer.cornerRadius = 20
+            button.tag = number
             button.addTarget(self,
                              action: #selector(handleSeriesButtonTapped(_:)),
                              for: .touchUpInside)
             seriesStackView.addArrangedSubview(button)
+
+            button.snp.makeConstraints { make in
+                make.width.height.equalTo(40)
+            }
         }
     }
 
