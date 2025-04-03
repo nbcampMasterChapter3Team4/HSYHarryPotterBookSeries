@@ -40,14 +40,16 @@ class BookView: UIView {
     let seriesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
+        stackView.spacing = 15
         stackView.distribution = .equalSpacing
+        stackView.alignment = .center
         return stackView
     } ()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        setSeriesLabel()
+        setSeriesLabel(selectedBook: 1)
     }
 
     required init?(coder: NSCoder) {
@@ -74,7 +76,9 @@ class BookView: UIView {
         seriesStackView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
-            make.leading.trailing.greaterThanOrEqualToSuperview().inset(20)
+//            make.leading.trailing.greaterThanOrEqualToSuperview().inset(20)
+            make.width.equalTo(335)
+
         }
 
         scrollView.snp.makeConstraints { make in
@@ -117,15 +121,20 @@ class BookView: UIView {
         }
     }
 
-    func setSeriesLabel() {
+    func setSeriesLabel(selectedBook: Int) {
+        seriesStackView.arrangedSubviews.forEach { subview in
+            seriesStackView.removeArrangedSubview(subview)
+            subview.removeFromSuperview()
+        }
+
         (1...7).forEach { number in
             let button = UIButton(type: .system)
             button.setTitle("\(number)", for: .normal)
             button.titleLabel?.font = .systemFont(ofSize: 16)
             button.titleLabel?.textAlignment = .center
-            button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = .systemBlue
-            button.layer.cornerRadius = 20
+            button.setTitleColor((number == selectedBook) ? .lightGray : .systemBlue, for: .normal)
+            button.backgroundColor = (number == selectedBook) ? .systemBlue : .lightGray
+            button.layer.cornerRadius = 17.5
             button.tag = number
             button.addTarget(self,
                              action: #selector(handleSeriesButtonTapped(_:)),
@@ -133,12 +142,13 @@ class BookView: UIView {
             seriesStackView.addArrangedSubview(button)
 
             button.snp.makeConstraints { make in
-                make.width.height.equalTo(40)
+                make.width.height.equalTo(35)
             }
         }
     }
 
     @objc private func handleSeriesButtonTapped(_ sender: UIButton) {
         delegate?.bookView(self, didSelectSeriesButton: sender.tag)
+        setSeriesLabel(selectedBook: sender.tag)
     }
 }

@@ -9,21 +9,21 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
-
+    
     private let bookView = BookView()
     private let dataService = DataService()  // Model 역할
     private let summaryStateModel = SummaryStateModel()
-
+    
     override func loadView() {
         view = bookView
         bookView.delegate = self
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadBook()
     }
-
+    
     private func loadBook(selectedNum: Int = 0) {
         dataService.loadBooks { [weak self] result in
             DispatchQueue.main.async {
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
                 case .success(let books):
                     guard books.indices.contains(selectedNum) else { return }
                     let selectedBook = books[selectedNum]
-
+                    
                     self?.bookView.titleLabel.text = selectedBook.title
                     self?.bookView.bookInfoStackView.updateContent(
                         imageName: "harrypotter" + "\(selectedNum + 1)",
@@ -39,26 +39,31 @@ class ViewController: UIViewController {
                         authorName: selectedBook.author,
                         releaseDate: selectedBook.releaseDate,
                         pages: selectedBook.pages)
-
+                    
                     self?.bookView.bookDedicationStackView.updateContent(dedication: selectedBook.dedication)
-
+                    
                     // 요약 텍스트 업데이트
                     let summaryText = selectedBook.summary
                     self?.bookView.bookSummaryStackView.updateContent(summary: summaryText,
                                                                       isExpanded: self?.summaryStateModel.isExpanded ?? false)
-
+                    
                     // 더보기/접기 버튼 액션 처리
                     self?.bookView.bookSummaryStackView.onToggle = { [weak self] in
                         guard let self = self else { return }
                         self.summaryStateModel.isExpanded.toggle()
                         self.bookView.bookSummaryStackView.updateContent(summary: summaryText,
-                                                                      isExpanded: self.summaryStateModel.isExpanded)
+                                                                         isExpanded: self.summaryStateModel.isExpanded)
                     }
-
+                    
                     self?.bookView.bookCapterStackView.updateContent(chapters: selectedBook.chapters.map({ $0.title }))
-
+                    
                 case .failure(let error):
-                    print("❌ 에러 발생: \(error)")
+                    let alert = UIAlertController(title: "데이터에 오류가 있습니다.",
+                                                  message: error.localizedDescription,
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
+                    
                 }
             }
         }
