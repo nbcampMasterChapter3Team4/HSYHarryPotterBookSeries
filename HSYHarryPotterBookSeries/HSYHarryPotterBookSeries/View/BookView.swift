@@ -8,25 +8,27 @@
 import UIKit
 import SnapKit
 
-class BookView: UIView {
+final class BookView: UIView {
 
     let bookInfoStackView = BookInfoStackView()
     let bookDedicationStackView = BookDedicationStackView()
     let bookSummaryStackView = BookSummaryStackView()
     let bookCapterStackView = BookChapterStackView()
+    
+    weak var delegate: BookViewDelegate?
 
-    let scrollView: UIScrollView = {
+    private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
 
-    let contentView: UIView = {
+    private let contentView: UIView = {
         let view = UIView()
         return view
     }()
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 24)
         label.textAlignment = .center
@@ -35,20 +37,19 @@ class BookView: UIView {
         return label
     }()
 
-    let seriesLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
-        label.textAlignment = .center
-        label.textColor = .white
-        label.backgroundColor = .systemBlue
-        label.clipsToBounds = true
-        label.layer.cornerRadius = 20
-        return label
+    private let seriesStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 15
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        return stackView
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+        setSeriesLabel(selectedBook: 1)
     }
 
     required init?(coder: NSCoder) {
@@ -62,7 +63,7 @@ class BookView: UIView {
         // MARK: - view
 
         addSubview(titleLabel)
-        addSubview(seriesLabel)
+        addSubview(seriesStackView)
         addSubview(scrollView)
         scrollView.addSubview(contentView)
 
@@ -72,14 +73,16 @@ class BookView: UIView {
             make.trailing.equalToSuperview().inset(20)
         }
 
-        seriesLabel.snp.makeConstraints { make in
+        seriesStackView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
-            make.leading.trailing.greaterThanOrEqualToSuperview().inset(20)
+            //            make.leading.trailing.greaterThanOrEqualToSuperview().inset(20)
+            make.width.equalTo(335)
+
         }
 
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(seriesLabel.snp.bottom).offset(24)
+            make.top.equalTo(seriesStackView.snp.bottom).offset(24)
             make.leading.trailing.equalTo(self.safeAreaLayoutGuide).inset(20)
             make.bottom.equalTo(self.safeAreaLayoutGuide)
         }
@@ -116,5 +119,42 @@ class BookView: UIView {
             make.top.equalTo(bookSummaryStackView.snp.bottom).offset(24)
             make.bottom.equalTo(contentView.snp.bottom).inset(16)
         }
+    }
+
+    private func setSeriesLabel(selectedBook: Int) {
+        seriesStackView.arrangedSubviews.forEach { subview in
+            seriesStackView.removeArrangedSubview(subview)
+            subview.removeFromSuperview()
+        }
+
+        (1...7).forEach { number in
+            let button = UIButton(type: .system)
+            button.setTitle("\(number)", for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 16)
+            button.titleLabel?.textAlignment = .center
+            button.setTitleColor((number == selectedBook) ? .lightGray : .systemBlue, for: .normal)
+            button.backgroundColor = (number == selectedBook) ? .systemBlue : .lightGray
+            button.layer.cornerRadius = 17.5
+            button.tag = number
+            button.addTarget(self,
+                             action: #selector(handleSeriesButtonTapped(_:)),
+                             for: .touchUpInside)
+            seriesStackView.addArrangedSubview(button)
+
+            button.snp.makeConstraints { make in
+                make.width.height.equalTo(35)
+            }
+        }
+    }
+
+    @objc private func handleSeriesButtonTapped(_ sender: UIButton) {
+        delegate?.bookView(self, didSelectSeriesButton: sender.tag)
+        setSeriesLabel(selectedBook: sender.tag)
+    }
+
+    // MARK: - 외부에서 데이터를 업데이트하는 메서드
+    /// title: 책 제목
+    func updateContent(title: String) {
+        titleLabel.text = title
     }
 }

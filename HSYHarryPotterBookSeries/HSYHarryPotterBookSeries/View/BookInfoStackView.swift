@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 
-class BookInfoStackView: UIStackView {
+final class BookInfoStackView: UIStackView {
 
     // MARK: - 책 표지 이미지
 
-    let coverImageView: UIImageView = {
+    private let coverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -20,7 +20,7 @@ class BookInfoStackView: UIStackView {
 
     // MARK: - 책 제목
 
-    let bookTitleLabel: UILabel = {
+    private let bookTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .black
@@ -31,7 +31,7 @@ class BookInfoStackView: UIStackView {
 
     // MARK: - 저자 정보
 
-    let authorTitleLabel: UILabel = {
+    private let authorTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .bold)
         label.textColor = .black
@@ -39,7 +39,7 @@ class BookInfoStackView: UIStackView {
         return label
     }()
 
-    let authorNameLabel: UILabel = {
+    private let authorNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18)
         label.textColor = .darkGray
@@ -56,7 +56,7 @@ class BookInfoStackView: UIStackView {
 
     // MARK: - 출간일 정보
 
-    let releaseTitleLabel: UILabel = {
+    private let releaseTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .bold)
         label.textColor = .black
@@ -64,7 +64,7 @@ class BookInfoStackView: UIStackView {
         return label
     }()
 
-    let releaseDateLabel: UILabel = {
+    private let releaseDateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = .gray
@@ -81,7 +81,7 @@ class BookInfoStackView: UIStackView {
 
     // MARK: - 페이지 정보
 
-    let pagesTitleLabel: UILabel = {
+    private let pagesTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .bold)
         label.textColor = .black
@@ -89,7 +89,7 @@ class BookInfoStackView: UIStackView {
         return label
     }()
 
-    let pagesNumberLabel: UILabel = {
+    private let pagesNumberLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = .gray
@@ -105,20 +105,20 @@ class BookInfoStackView: UIStackView {
     }()
 
     private let containerStackView: UIStackView = {
-            let stack = UIStackView()
-            stack.axis = .horizontal
-            stack.alignment = .top
-            stack.spacing = 8
-            return stack
-        }()
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.alignment = .top
+        stack.spacing = 8
+        return stack
+    }()
 
-        private let infoStackView: UIStackView = {
-            let stack = UIStackView()
-            stack.axis = .vertical
-            stack.alignment = .leading
-            stack.spacing = 8
-            return stack
-        }()
+    private let infoStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.alignment = .leading
+        stack.spacing = 8
+        return stack
+    }()
 
     // MARK: - 초기화
 
@@ -133,36 +133,36 @@ class BookInfoStackView: UIStackView {
     }
 
     private func setupViews() {
-           backgroundColor = .white
+        backgroundColor = .white
 
-           addSubview(containerStackView)
-           containerStackView.snp.makeConstraints { make in
-               make.edges.equalToSuperview()
-           }
+        addSubview(containerStackView)
+        containerStackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
 
-           containerStackView.addArrangedSubview(coverImageView)
+        containerStackView.addArrangedSubview(coverImageView)
 
-           coverImageView.snp.makeConstraints { make in
-               make.width.equalTo(100)
-               make.height.equalTo(coverImageView.snp.width).multipliedBy(1.5)
-           }
+        coverImageView.snp.makeConstraints { make in
+            make.width.equalTo(100)
+            make.height.equalTo(coverImageView.snp.width).multipliedBy(1.5)
+        }
 
-           containerStackView.addArrangedSubview(infoStackView)
+        containerStackView.addArrangedSubview(infoStackView)
 
-           infoStackView.addArrangedSubview(bookTitleLabel)
+        infoStackView.addArrangedSubview(bookTitleLabel)
 
-           authorStackView.addArrangedSubview(authorTitleLabel)
-           authorStackView.addArrangedSubview(authorNameLabel)
-           infoStackView.addArrangedSubview(authorStackView)
+        authorStackView.addArrangedSubview(authorTitleLabel)
+        authorStackView.addArrangedSubview(authorNameLabel)
+        infoStackView.addArrangedSubview(authorStackView)
 
-           releaseStackView.addArrangedSubview(releaseTitleLabel)
-           releaseStackView.addArrangedSubview(releaseDateLabel)
-           infoStackView.addArrangedSubview(releaseStackView)
+        releaseStackView.addArrangedSubview(releaseTitleLabel)
+        releaseStackView.addArrangedSubview(releaseDateLabel)
+        infoStackView.addArrangedSubview(releaseStackView)
 
-           pagesStackView.addArrangedSubview(pagesTitleLabel)
-           pagesStackView.addArrangedSubview(pagesNumberLabel)
-           infoStackView.addArrangedSubview(pagesStackView)
-       }
+        pagesStackView.addArrangedSubview(pagesTitleLabel)
+        pagesStackView.addArrangedSubview(pagesNumberLabel)
+        infoStackView.addArrangedSubview(pagesStackView)
+    }
 
     // MARK: - 외부에서 데이터를 업데이트하는 메서드
     /// imageName: 책 표지 이미지 이름
