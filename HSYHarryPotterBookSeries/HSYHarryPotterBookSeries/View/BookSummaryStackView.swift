@@ -32,7 +32,7 @@ final class BookSummaryStackView: UIStackView {
         return button
     }()
 
-    private var onToggle: (() -> Void)?
+    var onToggle: (() -> Void)?
 
     private var summaryText: String = ""
 

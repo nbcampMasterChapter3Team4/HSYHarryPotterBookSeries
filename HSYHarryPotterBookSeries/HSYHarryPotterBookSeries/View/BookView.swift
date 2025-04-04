@@ -44,7 +44,7 @@ final class BookView: UIView {
         stackView.distribution = .equalSpacing
         stackView.alignment = .center
         return stackView
-    } ()
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
