@@ -22,6 +22,13 @@ Ch 3. 앱 개발 입문 주차 과제
 
 ---
 
+## 실행 영상
+
+![ezgif-5b22e50bdac7fb](https://github.com/user-attachments/assets/a353468b-5acf-42f5-b249-c057ff799be5)
+
+
+---
+
 ## 아키텍처
 
 ### MVC 패턴
